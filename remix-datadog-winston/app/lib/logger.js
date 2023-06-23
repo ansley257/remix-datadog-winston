@@ -4,6 +4,7 @@ import {
   transports as _transports,
 } from 'winston';
 import os from 'os';
+import DataDogTransport from './datadogTransport';
 
 export const Logger = createLogger({
   level: 'debug',
@@ -29,5 +30,12 @@ export const Logger = createLogger({
     // - Write all logs with importance level of `info` or less to `combined.log`
     //
     new _transports.File({ filename: './log/frontend.log' }),
+    new DataDogTransport({
+      level: 'debug',
+      apiKey: process.env.DD_API_KEY,
+      service: process.env.SERVICE,
+      ddsource: 'nodejs',
+      hostname: os.hostname(),
+    }),
   ],
 });
