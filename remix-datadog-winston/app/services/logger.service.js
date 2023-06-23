@@ -14,7 +14,7 @@ export class LoggerService {
     meta = {
       ...meta,
       ...this.meta,
-      moduleName: this.moduleName,
+      module: this.moduleName,
     };
 
     fetch(this.logUrl, {
