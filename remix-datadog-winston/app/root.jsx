@@ -21,7 +21,6 @@ export default function App() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const log = new LoggerService('App');
-      log.child();
       log.info('App loaded');
     }
   }, []);
