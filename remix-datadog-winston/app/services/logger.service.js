@@ -3,6 +3,8 @@ export class LoggerService {
     this.moduleName = moduleName;
     this.meta = meta;
     this.loggerId = null;
+
+    this.child();
   }
 
   logUrl = 'http://localhost:3000/api/log';
@@ -12,7 +14,7 @@ export class LoggerService {
     meta = {
       ...meta,
       ...this.meta,
-      moduleName: this.moduleName,
+      module: this.moduleName,
     };
 
     fetch(this.logUrl, {

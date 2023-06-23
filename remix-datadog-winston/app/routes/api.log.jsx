@@ -5,7 +5,6 @@ export async function action({ request }) {
   const { childId, level, message, meta = null } = await request.json();
 
   const childLogger = childLoggers.find((logger) => logger.childId === childId);
-  console.log('childLoggers', childLoggers);
 
   if (!childLogger) {
     meta ? Logger.log(level, message, meta) : Logger.info(level, message);
