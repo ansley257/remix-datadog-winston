@@ -4,12 +4,13 @@
  * For more information, see https://remix.run/file-conventions/entry.server
  */
 
-import { PassThrough } from "node:stream";
+import { PassThrough } from 'node:stream';
 
-import { Response } from "@remix-run/node";
-import { RemixServer } from "@remix-run/react";
-import isbot from "isbot";
-import { renderToPipeableStream } from "react-dom/server";
+import { Response } from '@remix-run/node';
+import { RemixServer } from '@remix-run/react';
+import isbot from 'isbot';
+import { renderToPipeableStream } from 'react-dom/server';
+import { Logger } from './lib/logger';
 
 const ABORT_DELAY = 5_000;
 
@@ -20,7 +21,7 @@ export default function handleRequest(
   remixContext,
   loadContext
 ) {
-  return isbot(request.headers.get("user-agent"))
+  return isbot(request.headers.get('user-agent'))
     ? handleBotRequest(
         request,
         responseStatusCode,
@@ -55,7 +56,7 @@ function handleBotRequest(
           shellRendered = true;
           const body = new PassThrough();
 
-          responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set('Content-Type', 'text/html');
 
           resolve(
             new Response(body, {
@@ -105,7 +106,7 @@ function handleBrowserRequest(
           shellRendered = true;
           const body = new PassThrough();
 
-          responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set('Content-Type', 'text/html');
 
           resolve(
             new Response(body, {
@@ -133,4 +134,8 @@ function handleBrowserRequest(
 
     setTimeout(abort, ABORT_DELAY);
   });
+}
+
+export function handleError(error, { request, params, context }) {
+  Logger.child({ module: request.pathname }).error(error);
 }

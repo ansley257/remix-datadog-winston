@@ -7,7 +7,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from '@remix-run/react';
 
 import { LoggerService } from './services/logger.service';
@@ -21,7 +20,7 @@ export default function App() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const log = new LoggerService('App');
-      log.info('App loaded');
+      log.debug('App loaded');
     }
   }, []);
   return (
