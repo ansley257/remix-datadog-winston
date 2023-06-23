@@ -11,6 +11,7 @@ import {
 
 import { LoggerService } from './services/logger.service';
 import { useEffect } from 'react';
+import { UAParser } from 'ua-parser-js';
 
 export const links = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
@@ -19,7 +20,9 @@ export const links = () => [
 export default function App() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const log = new LoggerService('App');
+      const log = new LoggerService('App', {
+        userAgent: new UAParser().getResult(),
+      });
       log.debug('App loaded');
     }
   }, []);
