@@ -24,7 +24,6 @@ export default function App() {
         userAgent: new UAParser().getResult(),
       });
       log.debug('App loaded');
-      log.info('Testing properties', { foo: 'bar' });
     }
   }, []);
   return (
