@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { UAParser } from 'ua-parser-js';
+import { useState } from 'react';
+
 export const meta = () => {
   return [
     { title: 'New Remix App' },
@@ -8,14 +12,9 @@ export const meta = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.8' }}>
-      <a
-        className='btn btn-default'
-        href='#'
-        role='button'
-        data-dd-action-name='Login button'
-      >
+      <button className='btn btn-default' data-dd-action-name='Login button'>
         Try it out!
-      </a>
+      </button>
 
       <h1>Welcome to Remix</h1>
       <ul>

@@ -1,3 +1,4 @@
+import { tracer } from './datadogTracer';
 import {
   createLogger,
   format as _format,

@@ -1,3 +1,5 @@
+import { tracer } from '../lib/datadogTracer';
+
 export class LoggerService {
   constructor(moduleName, meta = null) {
     this.moduleName = moduleName;
@@ -16,7 +18,7 @@ export class LoggerService {
       ...this.meta,
       module: this.moduleName,
     };
-
+    console.log(this.moduleName, this.meta);
     fetch(this.logUrl, {
       method: 'POST',
       headers: {
@@ -34,6 +36,7 @@ export class LoggerService {
   childLogUrl = 'http://localhost:3000/api/logger';
 
   child() {
+    console.log(this.moduleName, this.meta);
     fetch(this.childLogUrl, {
       method: 'POST',
       headers: {

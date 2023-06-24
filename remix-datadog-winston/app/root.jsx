@@ -10,10 +10,8 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 
-import { LoggerService } from './services/logger.service';
-import { useEffect } from 'react';
-import { UAParser } from 'ua-parser-js';
 import { datadogRum } from '@datadog/browser-rum';
+import { useEffect } from 'react';
 
 export const links = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
@@ -23,7 +21,11 @@ export const links = () => [
 export const loader = async () => {
   return {
     ENV: {
-      ...process.env,
+      DD_RUM_APPLICATION_ID: process.env.DD_RUM_APPLICATION_ID,
+      DD_CLIENT_TOKEN: process.env.DD_CLIENT_TOKEN,
+      SERVICE: process.env.SERVICE,
+      NODE_ENV: process.env.NODE_ENV,
+      VERSION: process.env.VERSION,
     },
   };
 };
@@ -49,14 +51,13 @@ export default function App() {
         trackFrustrations: true,
         defaultPrivacyLevel: 'mask-user-input',
         silentMultipleInit: true,
+        allowedTracingUrls: [
+          (url) => url.startsWith('<http://localhost:3000>'),
+          (url) => url.startsWith('<http://192.168.0.169:3000>'),
+        ],
       });
 
       datadogRum.startSessionReplayRecording();
-
-      const log = new LoggerService('App', {
-        userAgent: new UAParser().getResult(),
-      });
-      log.debug('App loaded');
     }
   }, []);
   return (
@@ -75,6 +76,7 @@ export default function App() {
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
           }}
         />
+        {}
         <Scripts />
         <LiveReload />
       </body>

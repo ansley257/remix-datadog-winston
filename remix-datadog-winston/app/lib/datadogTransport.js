@@ -1,3 +1,4 @@
+import { tracer } from './datadogTracer';
 import Transport from 'winston-transport';
 import axios from 'axios';
 

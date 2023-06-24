@@ -1,5 +1,6 @@
+import { tracer } from '../lib/datadogTracer';
 import { Logger } from '../lib/logger';
-import { childLoggers } from './api.logger';
+// import { childLoggers } from './api.logger';
 
 export async function action({ request }) {
   const { childId, level, message, meta = null } = await request.json();
